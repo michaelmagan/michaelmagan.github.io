@@ -1,4 +1,3 @@
-import { AboutMe } from "@/landing/about";
 import { motion } from "framer-motion";
 import Links from "@/landing/links";
 
