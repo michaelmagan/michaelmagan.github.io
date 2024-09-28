@@ -122,9 +122,9 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
 
   return (
     <AlertDialog open={!isGameWon && !hasPlayedBefore}>
-      <AlertDialogContent className="sm:max-w-[200px] md:max-w-[400px] lg:max-w-[500px]">
+      <AlertDialogContent className="sm:max-w-[200px] md:max-w-[400px] lg:max-w-[500px] bg-black">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-2xl">
+          <AlertDialogTitle className="text-2xl text-cyan-200">
             You must play a game to enter...
           </AlertDialogTitle>
         </AlertDialogHeader>
@@ -132,15 +132,15 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
           {cards.map((card) => (
             <motion.div
               key={card.id}
-              className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gray-800 rounded-lg flex items-center justify-center cursor-pointer ${
-                card.isFlipped || card.isMatched ? "bg-gray-600" : ""
-              }`}
+              className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-cyan-900 rounded-lg flex items-center justify-center cursor-pointer ${
+                card.isFlipped || card.isMatched ? "bg-cyan-700" : ""
+              } border-2 border-cyan-200 shadow-[0_0_10px_#a7f3d0]`}
               onClick={() => handleCardClick(card.id)}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 15px #a7f3d0" }}
               whileTap={{ scale: 0.95 }}
             >
               {(card.isFlipped || card.isMatched) && (
-                <span className="text-3xl md:text-4xl lg:text-5xl text-white">
+                <span className="text-3xl md:text-4xl lg:text-5xl text-cyan-100">
                   {card.symbol}
                 </span>
               )}
@@ -151,7 +151,7 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
           {funnyMessage && (
             <motion.p
               key={funnyMessage}
-              className="text-md"
+              className="text-md text-cyan-100"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
@@ -167,7 +167,7 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
           )}
           {showSuccessMessage && (
             <motion.h2
-              className="text-2xl font-bold text-green-500"
+              className="text-2xl font-bold text-cyan-200"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}

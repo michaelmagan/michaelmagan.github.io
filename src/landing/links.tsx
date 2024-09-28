@@ -21,7 +21,7 @@ const links: Link[] = [
 
 const Links: React.FC = () => {
   return (
-    <section className="py-16 text-white">
+    <section className="py-16 text-cyan-100">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-8">
           {links.map((link, index) => (
@@ -35,7 +35,7 @@ const Links: React.FC = () => {
                 asChild
                 variant="outline"
                 size="lg"
-                className="w-full max-w-md h-20 bg-opacity-20 backdrop-blur-md hover:bg-opacity-40 transition-all duration-300 border-2 border-white/30 hover:border-white/60 shadow-lg hover:shadow-xl"
+                className="w-full max-w-md h-20 bg-cyan-900 hover:bg-cyan-700 transition-all duration-300 border-2 border-cyan-200 hover:border-cyan-100 shadow-[0_0_10px_#a7f3d0] hover:shadow-[0_0_15px_#a7f3d0]"
               >
                 <a
                   href={link.url}
