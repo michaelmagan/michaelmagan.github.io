@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
 
 const symbols = ["🚀", "🌟", "🪐", "🛸", "👽", "🌌"];
 const allSymbols = [...symbols, ...symbols];
 
 const funnyMessages = [
-  "Oops! Your memory seems to be taking a coffee break. Try again!",
-  "Error 404: Memory not found. Please reboot your brain!",
-  "Looks like those cards are using incognito mode in your mind!",
-  "Did you forget to update your mental firewall? Keep trying!",
-  "Your memory skills are experiencing high latency. Time for another attempt!",
+  "Do or do not. There is no try.",
+  "Just keep swimming.",
+  "It's not about how hard you hit.",
+  "The past can hurt. Learn from it.",
+  "Life moves fast. Don't miss it.",
+  "May the Force be with you.",
+  "I'll be back.",
+  "You can't handle the truth!",
+  "I see dead people.",
+  "I'll have what she's having.",
 ];
 
 interface Card {
@@ -26,13 +30,19 @@ interface Card {
   isMatched: boolean;
 }
 
-const MemoryGame: React.FC = () => {
+interface MemoryGameProps {
+  onGameWon: () => void;
+}
+
+const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<number>(0);
   const [isGameWon, setIsGameWon] = useState<boolean>(false);
   const [hasPlayedBefore, setHasPlayedBefore] = useState<boolean>(false);
   const [funnyMessage, setFunnyMessage] = useState<string>("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const controls = useAnimation();
 
   useEffect(() => {
     const storedHasPlayed = localStorage.getItem("hasPlayedMemoryGame");
@@ -83,6 +93,10 @@ const MemoryGame: React.FC = () => {
       if (matchedPairs + 1 === symbols.length) {
         setIsGameWon(true);
         localStorage.setItem("hasPlayedMemoryGame", JSON.stringify(true));
+        setTimeout(() => {
+          setShowSuccessMessage(true);
+        }, 1000);
+        onGameWon();
       }
     } else {
       setTimeout(() => {
@@ -96,6 +110,12 @@ const MemoryGame: React.FC = () => {
         const randomMessage =
           funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
         setFunnyMessage(randomMessage);
+
+        // Shake the game board
+        controls.start({
+          x: [0, -10, 10, -10, 10, 0],
+          transition: { duration: 0.5 },
+        });
       }, 1000);
     }
   };
@@ -104,40 +124,56 @@ const MemoryGame: React.FC = () => {
     <AlertDialog open={!isGameWon && !hasPlayedBefore}>
       <AlertDialogContent className="sm:max-w-[200px] md:max-w-[400px] lg:max-w-[500px]">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-xl">
-            Welcome to my site!
+          <AlertDialogTitle className="text-2xl">
+            You must play a game to enter...
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-base">
-            To unlock the site, you need to complete this memory game.
-          </AlertDialogDescription>
         </AlertDialogHeader>
-        <div className="grid grid-cols-4 gap-4 p-4">
+        <motion.div className="grid grid-cols-4 gap-4 p-4" animate={controls}>
           {cards.map((card) => (
             <motion.div
               key={card.id}
-              className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-purple-700 rounded-lg flex items-center justify-center cursor-pointer ${
-                card.isFlipped || card.isMatched ? "bg-purple-500" : ""
+              className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gray-800 rounded-lg flex items-center justify-center cursor-pointer ${
+                card.isFlipped || card.isMatched ? "bg-gray-600" : ""
               }`}
               onClick={() => handleCardClick(card.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               {(card.isFlipped || card.isMatched) && (
-                <span className="text-3xl md:text-4xl lg:text-5xl">
+                <span className="text-3xl md:text-4xl lg:text-5xl text-white">
                   {card.symbol}
                 </span>
               )}
             </motion.div>
           ))}
-        </div>
+        </motion.div>
         <div className="h-8 text-center mt-4">
           {funnyMessage && (
-            <p className="text-md text-yellow-500">{funnyMessage}</p>
+            <motion.p
+              key={funnyMessage}
+              className="text-md"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+              onAnimationComplete={() => {
+                setTimeout(() => {
+                  setFunnyMessage("");
+                }, 3000);
+              }}
+            >
+              {funnyMessage}
+            </motion.p>
           )}
-          {isGameWon && (
-            <h2 className="text-2xl font-bold text-green-500">
+          {showSuccessMessage && (
+            <motion.h2
+              className="text-2xl font-bold text-green-500"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               Congratulations! You've unlocked the site!
-            </h2>
+            </motion.h2>
           )}
         </div>
       </AlertDialogContent>
