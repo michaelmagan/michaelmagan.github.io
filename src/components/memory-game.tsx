@@ -10,17 +10,23 @@ import {
 const symbols = ["🚀", "🌟", "🪐", "🛸", "👽", "🌌"];
 const allSymbols = [...symbols, ...symbols];
 
-const funnyMessages = [
+const failureMessages = [
   "Do or do not. There is no try.",
-  "Just keep swimming.",
-  "It's not about how hard you hit.",
-  "The past can hurt. Learn from it.",
-  "Life moves fast. Don't miss it.",
   "May the Force be with you.",
-  "I'll be back.",
-  "You can't handle the truth!",
-  "I see dead people.",
-  "I'll have what she's having.",
+  "Life finds a way.",
+  "Carpe diem.",
+  "Ohana means family.",
+  "To infinity and beyond!",
+  "You shall not pass!",
+];
+
+const successMessages = [
+  "There you go.",
+  "Getting closer.",
+  "Almost there...",
+  "You're on the right track!",
+  "Keep it up!",
+  "One step closer to victory!",
 ];
 
 interface Card {
@@ -40,8 +46,16 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
   const [matchedPairs, setMatchedPairs] = useState<number>(0);
   const [isGameWon, setIsGameWon] = useState<boolean>(false);
   const [hasPlayedBefore, setHasPlayedBefore] = useState<boolean>(false);
-  const [funnyMessage, setFunnyMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [messageType, setMessageType] = useState<"success" | "failure">(
+    "success"
+  );
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [failureIndex, setFailureIndex] = useState<number>(0);
+  const [successIndex, setSuccessIndex] = useState<number>(0);
+  const [messageTimeout, setMessageTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
   const controls = useAnimation();
 
   useEffect(() => {
@@ -79,6 +93,23 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
     }
   };
 
+  const displayMessage = (newMessage: string, type: "success" | "failure") => {
+    setMessage(newMessage);
+    setMessageType(type);
+
+    // Clear any existing timeout
+    if (messageTimeout) {
+      clearTimeout(messageTimeout);
+    }
+
+    // Set a new timeout to clear the message after 3 seconds
+    const timeout = setTimeout(() => {
+      setMessage("");
+    }, 3000);
+
+    setMessageTimeout(timeout);
+  };
+
   const checkForMatch = (flippedCardIds: number[]) => {
     const [firstCardId, secondCardId] = flippedCardIds;
     if (cards[firstCardId].symbol === cards[secondCardId].symbol) {
@@ -88,7 +119,10 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
       setCards(newCards);
       setMatchedPairs(matchedPairs + 1);
       setFlippedCards([]);
-      setFunnyMessage("");
+
+      // Display a success message
+      displayMessage(successMessages[successIndex], "success");
+      setSuccessIndex((prevIndex) => (prevIndex + 1) % successMessages.length);
 
       if (matchedPairs + 1 === symbols.length) {
         setIsGameWon(true);
@@ -106,10 +140,11 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
         setCards(newCards);
         setFlippedCards([]);
 
-        // Display a funny message when the player gets it wrong
-        const randomMessage =
-          funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
-        setFunnyMessage(randomMessage);
+        // Display a failure message when the player gets it wrong
+        displayMessage(failureMessages[failureIndex], "failure");
+        setFailureIndex(
+          (prevIndex) => (prevIndex + 1) % failureMessages.length
+        );
 
         // Shake the game board
         controls.start({
@@ -148,21 +183,16 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
           ))}
         </motion.div>
         <div className="h-8 text-center mt-4">
-          {funnyMessage && (
+          {message && (
             <motion.p
-              key={funnyMessage}
-              className="text-md text-cyan-100"
+              key={message}
+              className={`text-md ${messageType === "success" ? "text-green-400" : "text-red-400"}`}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5 }}
-              onAnimationComplete={() => {
-                setTimeout(() => {
-                  setFunnyMessage("");
-                }, 3000);
-              }}
             >
-              {funnyMessage}
+              {message}
             </motion.p>
           )}
           {showSuccessMessage && (
