@@ -122,7 +122,7 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGameWon }) => {
 
   return (
     <AlertDialog open={!isGameWon && !hasPlayedBefore}>
-      <AlertDialogContent className="sm:max-w-[200px] md:max-w-[400px] lg:max-w-[500px] bg-black">
+      <AlertDialogContent className="md:max-w-[400px] lg:max-w-[500px] bg-black">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-2xl text-cyan-200">
             You must play a game to enter...
