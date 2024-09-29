@@ -81,7 +81,7 @@ function App() {
   const [gameWon, setGameWon] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowGame(true), 8000); // Show game after 8 seconds
+    const timer = setTimeout(() => setShowGame(true), 4000);
     const gamePlayedStatus = localStorage.getItem("hasPlayedMemoryGame");
     setHasPlayedGame(gamePlayedStatus === "true");
     return () => clearTimeout(timer);
