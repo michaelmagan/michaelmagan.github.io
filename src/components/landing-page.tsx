@@ -2,60 +2,20 @@ import { motion } from "framer-motion";
 import Links from "@/landing/links";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-
-interface StarProps {
-  top: number;
-  left: number;
-  size: number;
-  delay: number;
-}
-
-const Star: React.FC<StarProps> = ({ top, left, size, delay }) => (
-  <motion.div
-    className="absolute bg-white rounded-full"
-    style={{
-      top: `${top}%`,
-      left: `${left}%`,
-      width: size,
-      height: size,
-    }}
-    animate={{
-      opacity: [0, 1, 0],
-      scale: [0.5, 1, 0.5],
-    }}
-    transition={{
-      duration: 2,
-      repeat: Infinity,
-      delay: delay,
-    }}
-  />
-);
-
-const FlyingSaucer: React.FC<{ mousePosition: { x: number; y: number } }> = ({
-  mousePosition,
-}) => (
-  <motion.div
-    className="absolute pointer-events-none z-50"
-    animate={{
-      x: mousePosition.x - 50,
-      y: mousePosition.y - 50,
-    }}
-    transition={{
-      type: "spring",
-      damping: 10,
-      stiffness: 100,
-      restDelta: 0.001,
-    }}
-  >
-    <span style={{ fontSize: "4rem" }}>🛸</span>
-  </motion.div>
-);
+import Star from "@/components/Star";
+import FlyingSaucer from "@/components/FlyingSaucer";
+import Rocket from "@/components/Rocket";
+import { StarProps, MousePosition } from "@/utils/types";
+import { containerVariants, textVariants } from "@/utils/animations";
 
 export function LandingContent() {
   const [showSecret, setShowSecret] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
   const [stars, setStars] = useState<StarProps[]>([]);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState<MousePosition>({
+    x: 0,
+    y: 0,
+  });
+  const [showRocket, setShowRocket] = useState(false);
 
   useEffect(() => {
     const generateStars = () => {
@@ -74,26 +34,10 @@ export function LandingContent() {
     generateStars();
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 2, delay: 0.5 } },
-  };
-
-  const textVariants = {
-    hidden: { y: "100%", opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "tween",
-        duration: 5,
-        ease: "linear",
-      },
-    },
-  };
-
   const handleSecretClick = () => {
     setShowSecret(true);
+    setShowRocket(true);
+    setTimeout(() => setShowRocket(false), 2000);
   };
 
   const handleMouseMove = (event: React.MouseEvent) => {
@@ -106,14 +50,13 @@ export function LandingContent() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
       onMouseMove={handleMouseMove}
     >
       {stars.map((star, index) => (
         <Star key={index} {...star} />
       ))}
       <FlyingSaucer mousePosition={mousePosition} />
+      {showRocket && <Rocket />}
       <motion.div
         className="perspective-1000 transform-3d"
         style={{ transformOrigin: "50% 100%" }}
@@ -128,21 +71,14 @@ export function LandingContent() {
         <motion.div variants={textVariants}>
           <Links />
         </motion.div>
-        {isHovering && !showSecret && (
-          <motion.div
-            className="mt-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Button
-              variant="ghost"
-              size="lg"
-              className="text-cyan-200 hover:text-cyan-100"
-              onClick={handleSecretClick}
-            ></Button>
-          </motion.div>
-        )}
+        <motion.div className="mt-8">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="text-cyan-200 hover:text-cyan-100 w-full h-16 opacity-0"
+            onClick={handleSecretClick}
+          />
+        </motion.div>
         {showSecret && (
           <motion.p
             className="mt-4 text-cyan-200"
