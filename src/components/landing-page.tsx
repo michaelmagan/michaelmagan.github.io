@@ -44,9 +44,15 @@ export function LandingContent() {
     setMousePosition({ x: event.clientX, y: event.clientY });
   };
 
+  const handleShowAnimation = () => {
+    // This function should trigger the animation to show again
+    // You might need to lift this state up to the parent component
+    // For now, we'll just reload the page as a simple solution
+    window.location.reload();
+  };
   return (
     <motion.div
-      className="container mx-auto px-4 py-16 text-center relative z-10"
+      className="container mx-auto px-4 text-center relative z-10"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -69,26 +75,46 @@ export function LandingContent() {
           Michael Magán
         </motion.h1>
         <motion.div variants={textVariants}>
+          Congrats on unlocking my page. I'm a founder working on the future of
+          UX.
+        </motion.div>
+        <motion.div variants={textVariants}>
           <Links />
         </motion.div>
         <motion.div className="mt-8">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="text-cyan-200 hover:text-cyan-100 w-full h-16 opacity-0"
-            onClick={handleSecretClick}
-          />
+          {!showSecret ? (
+            <Button
+              variant="ghost"
+              size="lg"
+              className="text-cyan-200 hover:text-cyan-100 w-full h-12 opacity-0"
+              onClick={handleSecretClick}
+            />
+          ) : (
+            <motion.p
+              className="mt-4 text-cyan-200"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              You found the secret button! 🎉
+            </motion.p>
+          )}
         </motion.div>
-        {showSecret && (
-          <motion.p
-            className="mt-4 text-cyan-200"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            You found the secret button! 🎉
-          </motion.p>
-        )}
+      </motion.div>
+      <motion.div
+        className="mt-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      >
+        <Button
+          variant="link"
+          size="sm"
+          className="text-cyan-300 hover:text-cyan-100"
+          onClick={handleShowAnimation}
+        >
+          Show animation again
+        </Button>
       </motion.div>
     </motion.div>
   );
