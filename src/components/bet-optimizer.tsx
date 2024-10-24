@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 
 const BetOptimizer = () => {
   const [totalBankroll, setTotalBankroll] = useState(1000);
-  const [trumpProb, setTrumpProb] = useState(51);
+  const [trumpProb, setTrumpProb] = useState(52);
   const [trumpYesPrice, setTrumpYesPrice] = useState(62.8);
   const [harrisYesPrice, setHarrisYesPrice] = useState(37.3);
 
