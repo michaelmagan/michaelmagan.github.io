@@ -42,7 +42,7 @@ export const formatForGoogleDocs = (text: string) => {
             return `  ${trimmedPart.substring(1).trim()}\n`;
           } else if (trimmedPart) {
             // Format paragraphs with proper spacing
-            return `${trimmedPart.replace(/\s+/g, " ").trim()}\n\n`;
+            return `${trimmedPart}\n\n`;
           }
           return "";
         })
@@ -51,6 +51,5 @@ export const formatForGoogleDocs = (text: string) => {
       return formatted;
     })
     .join("\n")
-    .replace(/\n{3,}/g, "\n\n") // Remove excess newlines
     .trim();
 };
