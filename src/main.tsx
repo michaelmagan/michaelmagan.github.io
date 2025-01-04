@@ -6,6 +6,7 @@ import App from "./App.tsx";
 import { Toaster } from "@/components/ui/toaster";
 import ElectionBet from "./pages/election";
 import MotivationPage from "./pages/motivation";
+import FormatPage from "./pages/format";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Route path="/" element={<App />} />
         <Route path="/election" element={<ElectionBet />} />
         <Route path="/motivation" element={<MotivationPage />} />
+        <Route path="/gdocs" element={<FormatPage />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
