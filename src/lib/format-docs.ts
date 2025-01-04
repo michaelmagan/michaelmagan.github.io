@@ -20,7 +20,7 @@ export const formatForGoogleDocs = (text: string) => {
       const content = lines.join("\n").trim();
 
       // Split into numbered lists, bullet points, and paragraphs
-      const parts = content.split(/(?=^\s*(?:[0-9]+\.|\•|\-|\t))/m);
+      const parts = content.split(/(?=^\s*(?:[0-9]+\.|[•-]|\t))/m);
 
       formatted += parts
         .map((part) => {
