@@ -1,9 +1,9 @@
-import tailwindAnimate from 'tailwindcss-animate';
+import tailwindAnimate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './posts/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     container: {
       center: true,
@@ -14,6 +14,7 @@ export default {
     },
     extend: {
       colors: {
+        offwhite: '#f5f5f0',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -70,4 +71,4 @@ export default {
     },
   },
   plugins: [tailwindAnimate],
-};
+}
