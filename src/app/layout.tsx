@@ -1,0 +1,109 @@
+import type { Metadata } from "next";
+import { Fraunces, Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: "variable",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://www.michaelmagan.com"),
+  title: {
+    default: "Michael Magan — Thoughts & Reading",
+    template: "%s — Michael Magan",
+  },
+  description:
+    "Personal site for Michael Magan. Thoughts, notes, and books I'm reading.",
+  openGraph: {
+    title: "Michael Magan — Thoughts & Reading",
+    description:
+      "Personal site for Michael Magan. Thoughts, notes, and books I'm reading.",
+    type: "website",
+    locale: "en_US",
+    url: "https://www.michaelmagan.com",
+    siteName: "Michael Magan",
+    images: [
+      {
+        url: "/michael-magan-li.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Michael Magan",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@mrmagan_",
+    creator: "@mrmagan_",
+    title: "Michael Magan — Thoughts & Reading",
+    description:
+      "Personal site for Michael Magan. Thoughts, notes, and books I'm reading.",
+    images: ["/michael-magan-li.jpeg"],
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <div className="mx-auto max-w-5xl px-6 py-10">
+          <header className="flex items-center justify-between pb-6">
+            <Link
+              href="/"
+              className={`${fraunces.className} font-semibold tracking-tight`}
+            >
+              Michael Magán
+            </Link>
+            <nav className="text-sm text-zinc-500">
+              <Link
+                className="hover:text-zinc-900 dark:hover:text-zinc-100"
+                href="/thoughts"
+              >
+                Thoughts
+              </Link>
+              <span className="px-2">/</span>
+              <Link
+                className="hover:text-zinc-900 dark:hover:text-zinc-100"
+                href="/books"
+              >
+                Books
+              </Link>
+            </nav>
+          </header>
+          <main>{children}</main>
+          <footer className="mt-10 border-t pt-6 text-sm text-zinc-500">
+            <p>
+              Follow on X:{" "}
+              <a
+                href="https://x.com/mrmagan_"
+                className="font-medium hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @mrmagan_
+              </a>
+            </p>
+          </footer>
+        </div>
+      </body>
+    </html>
+  );
+}
