@@ -9,19 +9,19 @@ export default function Home() {
     .sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)))
     .slice(0, 3);
   const home = allPages.find((p) => p.slug === "home");
-  const contact = allPages.find((p) => p.slug === "contact");
   const [featured, ...restPosts] = posts;
 
   return (
-    <section className="space-y-10">
-      <div className="grid items-start gap-10 md:grid-cols-[200px_1fr] lg:grid-cols-[280px_1fr_320px]">
+    <section className="space-y-12">
+      <div className="grid items-start gap-10 md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
         <div className="md:row-span-2 lg:sticky lg:top-10">
           <Image
             src="/michael-magan-li.jpeg"
-            alt="Michael Magan"
-            width={320}
-            height={320}
+            alt="Portrait of Michael Magán"
+            width={280}
+            height={280}
             className="rounded-xl object-cover shadow-sm w-full h-auto"
+            sizes="(max-width: 768px) 140px, (max-width: 1024px) 200px, 280px"
             priority
           />
         </div>
@@ -31,19 +31,7 @@ export default function Home() {
             {home ? <MDXContent code={home.body.code} /> : null}
           </div>
         </div>
-
-        <aside className="hidden lg:block lg:border-l lg:pl-8 lg:dark:border-zinc-800">
-          <div className="prose prose-zinc dark:prose-invert">
-            {contact ? <MDXContent code={contact.body.code} /> : null}
-          </div>
-        </aside>
       </div>
-
-      {contact ? (
-        <div className="lg:hidden rounded-lg border p-4 bg-white/60 dark:bg-zinc-900/40 prose prose-zinc dark:prose-invert">
-          <MDXContent code={contact.body.code} />
-        </div>
-      ) : null}
 
       <section className="space-y-4">
         <h2 className="text-sm font-medium tracking-tight">Latest thoughts</h2>

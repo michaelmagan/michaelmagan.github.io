@@ -3,6 +3,7 @@ import { withContentlayer } from "next-contentlayer";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: path.join(__dirname),
   images: {
     formats: ["image/avif", "image/webp"],
   },

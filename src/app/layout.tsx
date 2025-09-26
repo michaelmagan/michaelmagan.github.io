@@ -64,7 +64,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mx-auto max-w-5xl px-6 py-10">
+        <div className="mx-auto max-w-5xl px-6 py-12">
           <header className="flex items-center justify-between pb-6">
             <Link
               href="/"
@@ -89,7 +89,7 @@ export default function RootLayout({
             </nav>
           </header>
           <main>{children}</main>
-          <footer className="mt-10 border-t pt-6 text-sm text-zinc-500">
+          <footer className="mt-12 border-t border-zinc-200 pt-6 text-sm text-zinc-500 dark:border-zinc-800">
             <p>
               Follow on X:{" "}
               <a

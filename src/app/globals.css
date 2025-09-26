@@ -4,6 +4,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --link: #0d9488; /* teal-600 */
+  --link-hover: #0f766e; /* teal-700 */
 }
 
 @theme inline {
@@ -17,17 +19,79 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --link: #2dd4bf; /* teal-400 */
+    --link-hover: #5eead4; /* teal-300 */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  font-size: 18px;
+  line-height: 1.65;
 }
  
 .prose :where(img):not(:where([class~="not-prose"] *)) {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.5rem;
+}
+
+/* Measure and rhythm */
+.prose {
+  max-width: 68ch;
+}
+
+/* Link styling (content only, inline/text links) */
+main a:not([class*="block"]):not([class*="inline-block"]):not([class*="flex"]):not([class*="grid"]) {
+  color: var(--link);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 3px;
+}
+main a:not([class*="block"]):not([class*="inline-block"]):not([class*="flex"]):not([class*="grid"]):hover {
+  color: var(--link-hover);
+}
+
+/* Link color inside prose must override plugin defaults */
+.prose :where(a):not(:where([class~="not-prose"] *)):where(:not([class*="block"]):not([class*="inline-block"]):not([class*="flex"]):not([class*="grid"])) {
+  color: var(--link);
+}
+.prose :where(a:hover):not(:where([class~="not-prose"] *)):where(:not([class*="block"]):not([class*="inline-block"]):not([class*="flex"]):not([class*="grid"])) {
+  color: var(--link-hover);
+}
+
+/* Block-level links (cards, etc.) inherit text color and drop underline */
+a.block,
+a.inline-block,
+a.flex,
+a.grid {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Do not style heading self-links like regular links; disable click */
+.prose h1 a.anchor,
+.prose h2 a.anchor,
+.prose h3 a.anchor,
+.prose h4 a.anchor,
+.prose h5 a.anchor,
+.prose h6 a.anchor {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+/* Global safeguard: any anchor directly inside headings in main content */
+main h1 > a,
+main h2 > a,
+main h3 > a,
+main h4 > a,
+main h5 > a,
+main h6 > a {
+  color: inherit !important;
+  text-decoration: none !important;
+  pointer-events: none;
 }
