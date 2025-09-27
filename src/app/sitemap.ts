@@ -2,7 +2,7 @@ import { allPosts } from "contentlayer/generated";
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://www.michaelmagan.com";
+  const base = "https://magan.info";
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${base}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/thoughts`, changeFrequency: "weekly" },

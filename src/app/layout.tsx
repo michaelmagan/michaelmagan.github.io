@@ -19,7 +19,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.michaelmagan.com"),
+  metadataBase: new URL("https://magan.info"),
   title: {
     default: "Michael Magan — Thoughts & Reading",
     template: "%s — Michael Magan",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       "Personal site for Michael Magan. Thoughts, notes, and books I'm reading.",
     type: "website",
     locale: "en_US",
-    url: "https://www.michaelmagan.com",
+    url: "https://magan.info",
     siteName: "Michael Magan",
     images: [
       {
