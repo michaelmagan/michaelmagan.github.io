@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <section className="space-y-12">
       <div className="grid items-start gap-10 md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-        <div className="md:row-span-2 lg:sticky lg:top-10">
+        <div className="md:row-span-2 lg:top-10">
           <Image
             src="/michael-magan-li.jpeg"
             alt="Portrait of Michael Magán"
