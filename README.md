@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Personal Site (Next.js + Contentlayer + MDX)
 
-## Getting Started
+A content-driven personal site built with Next.js App Router, Contentlayer, MDX, and Tailwind CSS.
 
-First, run the development server:
+### Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **dev**: start dev server
+- **build**: production build
+- **start**: run built app
+- **lint**: run ESLint
+- **typecheck**: TypeScript project check
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+content/
+  pages/              # MDX content pages (e.g. home, books)
+  posts/              # MDX blog posts ("Thoughts")
+src/
+  app/                # App Router routes
+    [...page]/        # Renders Contentlayer Page docs (except home)
+    thoughts/[slug]/  # Renders Contentlayer Post docs
+  components/         # UI components
+  lib/                # MDX component mappings
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Content authoring
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This site uses Contentlayer to source MDX from the `content/` directory. Changes are picked up automatically in dev.
 
-## Deploy on Vercel
+### Posts — `content/posts/**/*.mdx`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Frontmatter fields (required unless noted):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **title**
+- **summary**
+- **date**: ISO date (e.g. 2025-09-01)
+- **image**: path to a public image (e.g. `/some-image.jpg`)
+- **imageAlt**
+- **tags**: optional list of strings
+
+Example:
+
+```mdx
+---
+title: "Post title"
+summary: "Short summary for cards/SEO"
+date: "2025-09-01"
+image: "/michael-magan-li.jpeg"
+imageAlt: "Michael Magan in Li"
+tags: [personal, notes]
+---
+
+Your MDX content here.
+```
+
+Routing: each post is available at `/thoughts/{slug}` where `slug` comes from the file path under `content/posts/` (without the `posts/` prefix or `.mdx`). Reading time is computed automatically.
+
+Open Graph/Twitter cards use `title`, `summary`, and `image`/`imageAlt`.
+
+### Pages — `content/pages/**/*.mdx`
+
+Frontmatter:
+
+- **title**
+- **description**: optional
+
+Example:
+
+```mdx
+---
+title: "Books"
+description: "Books I’m reading and recommendations"
+---
+
+Page body in MDX.
+```
+
+Routing: page URLs mirror the file path under `content/pages/`. The special file `home.mdx` renders the homepage at `/` and is excluded from the catch‑all route.
+
+## MDX rendering
+
+- `img` and `Image` components are mapped to include rounded styles by default via `src/lib/mdx-components.tsx` and used in `src/components/MDXContent.tsx`.
+- Headings get slugs and anchor links via `rehype-slug` and `rehype-autolink-headings`.
+- Note: `remark-gfm` is intentionally disabled due to a known mdast table bug in this setup.
+
+## SEO & platform
+
+- Dynamic metadata per post/page is generated from frontmatter.
+- `src/app/sitemap.ts` and `src/app/robots.ts` are provided.
+
+## Deployment
+
+Deploy to Vercel. Typical flow:
+
+```bash
+npm run build
+```
+
+Push to the default branch connected to Vercel. Environment does not require special variables for content.
