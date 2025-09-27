@@ -1,3 +1,4 @@
+import Nav from "@/components/Nav";
 import type { Metadata } from "next";
 import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
@@ -72,21 +73,7 @@ export default function RootLayout({
             >
               Michael Magán
             </Link>
-            <nav className="text-sm text-zinc-500">
-              <Link
-                className="hover:text-zinc-900 dark:hover:text-zinc-100"
-                href="/thoughts"
-              >
-                Thoughts
-              </Link>
-              <span className="px-2">/</span>
-              <Link
-                className="hover:text-zinc-900 dark:hover:text-zinc-100"
-                href="/books"
-              >
-                Books
-              </Link>
-            </nav>
+            <Nav />
           </header>
           <main>{children}</main>
           <footer className="mt-12 border-t border-zinc-200 pt-6 text-sm text-zinc-500 dark:border-zinc-800">

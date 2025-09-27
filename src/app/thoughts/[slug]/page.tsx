@@ -13,9 +13,9 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<unknown>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = (await params) as { slug: string };
+  const { slug } = await params;
   const post = allPosts.find((p) => p.slug === slug);
   if (!post) return {};
   const title = post.title;
@@ -39,9 +39,9 @@ export async function generateMetadata({
 export default async function PostPage({
   params,
 }: {
-  params: Promise<unknown>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = (await params) as { slug: string };
+  const { slug } = await params;
   const post = allPosts.find((p) => p.slug === slug);
   if (!post) return notFound();
 
