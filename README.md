@@ -93,6 +93,20 @@ Routing: page URLs mirror the file path under `content/pages/`. The special file
 - Headings get slugs and anchor links via `rehype-slug` and `rehype-autolink-headings`.
 - Note: `remark-gfm` is intentionally disabled due to a known mdast table bug in this setup.
 
+### Interactive React components in MDX
+
+You can embed interactive React components directly in MDX posts/pages. Components are exposed through the MDX components map in `src/lib/mdx-components.tsx`.
+
+Example component: `Counter` in `src/components/Counter.tsx` (client component).
+
+Usage in MDX (no import needed):
+
+```mdx
+<Counter initial={3} />
+```
+
+To add your own components, export them and register them in `useMDXComponents` so they are available by tag name inside MDX.
+
 ## SEO & platform
 
 - Dynamic metadata per post/page is generated from frontmatter.

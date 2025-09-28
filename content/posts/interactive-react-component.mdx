@@ -1,0 +1,22 @@
+---
+title: "Interactive React in MDX: Counter demo"
+summary: "An example post showing a live React component inside MDX."
+date: "2025-09-28"
+image: "/buildspace.jpeg"
+imageAlt: "Colorful gradient background"
+tags: [mdx, react, demo]
+---
+
+MDX supports rendering real React components alongside your prose. Components are
+mapped in `src/lib/mdx-components.tsx`, so you can use them directly by name.
+
+Below is a simple, interactive counter:
+
+<Counter initial={3} />
+
+You can pass props too, for example a different step size:
+
+<Counter initial={10} step={2} />
+
+That’s it—interactive UI embedded right inside your blog post.
+
