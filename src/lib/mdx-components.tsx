@@ -1,7 +1,9 @@
 import clsx from "clsx";
-import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import type { ImgHTMLAttributes } from "react";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MDXComponents = Record<string, React.ComponentType<any>>;
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -20,6 +22,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         className={clsx("rounded-md", props.className)}
       />
     ),
+    // Add MDX components here
     ...components,
   };
 }

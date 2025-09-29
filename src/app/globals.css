@@ -45,6 +45,46 @@ body {
   max-width: 68ch;
 }
 
+/* Headings: default to normal weight */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+}
+
+/* Ensure typography plugin headings aren't bold inside prose */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-weight: 400;
+}
+
+/* Drop cap for first paragraph in post content only */
+.post-body :where(p:first-of-type)::first-letter {
+  float: left;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-weight: 600;
+  font-size: 3.2em;
+  line-height: 0.85;
+  margin: 0.06em 0.18em 0 0;
+}
+
+/* Ensure blog post markdown headings are normal weight */
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  font-weight: 400;
+}
+
 /* Link styling (content only, inline/text links) */
 main a:not([class*="block"]):not([class*="inline-block"]):not([class*="flex"]):not([class*="grid"]) {
   color: var(--link);

@@ -2,6 +2,7 @@ import MDXContent from "@/components/MDXContent";
 import { allPosts } from "contentlayer/generated";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export const dynamicParams = false;
@@ -47,16 +48,10 @@ export default async function PostPage({
 
   return (
     <article className="prose prose-zinc dark:prose-invert">
-      <h1>{post.title}</h1>
-      <p className="-mt-4 text-sm text-zinc-500">
-        {new Date(post.date).toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-        {post.readingTime?.text ? ` • ${post.readingTime.text}` : null}
-      </p>
-      <div className="my-4 rounded-md overflow-hidden">
+      <h1 className="text-2xl tracking-tight mt-0 mb-1">{post.title}</h1>
+      <p className="mt-0 text-zinc-500">{post.summary}</p>
+
+      <div className="my-2 rounded-md overflow-hidden">
         <Image
           src={post.image}
           alt={post.imageAlt}
@@ -66,7 +61,22 @@ export default async function PostPage({
           priority
         />
       </div>
-      <MDXContent code={post.body.code} />
+      <p className="mt-0 mb-6 text-sm text-zinc-500 uppercase">
+        {new Date(post.date).toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+        {post.readingTime?.text ? ` • ${post.readingTime.text}` : null}
+      </p>
+      <hr className="my-8" />
+      <div className="post-body">
+        <MDXContent code={post.body.code} />
+      </div>
+      <hr className="my-8" />
+      <div>
+        <Link href="/thoughts"> ← Back to thoughts</Link>
+      </div>
     </article>
   );
 }

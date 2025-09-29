@@ -29,7 +29,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="text-sm text-zinc-500 flex items-center gap-3">
+    <nav className="text-md text-zinc-500 flex items-center gap-3">
       <Link
         className="hover:text-zinc-900 dark:hover:text-zinc-100"
         href="/thoughts"
