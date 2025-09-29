@@ -52,7 +52,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 400 !important;
+  font-weight: 400;
 }
 
 /* Ensure typography plugin headings aren't bold inside prose */
@@ -62,7 +62,7 @@ h6 {
 .prose h4,
 .prose h5,
 .prose h6 {
-  font-weight: 400 !important;
+  font-weight: 400;
 }
 
 /* Drop cap for first paragraph in post content only */
@@ -82,7 +82,7 @@ h6 {
 .post-body h4,
 .post-body h5,
 .post-body h6 {
-  font-weight: 400 !important;
+  font-weight: 400;
 }
 
 /* Link styling (content only, inline/text links) */
