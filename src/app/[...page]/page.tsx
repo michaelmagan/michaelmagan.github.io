@@ -43,7 +43,7 @@ export default async function Page({
   if (!doc) return notFound();
   return (
     <article className="prose prose-zinc dark:prose-invert">
-      <h1 className="text-2xl font-semibold tracking-tight">{doc.title}</h1>
+      <h1 className="text-xl">{doc.title}</h1>
       <MDXContent code={doc.body.code} />
     </article>
   );

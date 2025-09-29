@@ -69,7 +69,7 @@ export default function RootLayout({
           <header className="flex items-center justify-between pb-6">
             <Link
               href="/"
-              className={`${fraunces.className} font-semibold tracking-tight`}
+              className={`${fraunces.className} font-semibold text-2xl tracking-tight`}
             >
               Michael Magán
             </Link>
