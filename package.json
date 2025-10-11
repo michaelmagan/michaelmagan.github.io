@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf .next .contentlayer out",
     "prepare": "husky"
   },
   "dependencies": {
