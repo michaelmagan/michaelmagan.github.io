@@ -16,6 +16,15 @@ export default function BettingStrategySimulator() {
   const safeMultiplier = 2;
   const safeBetSize = 30;
 
+  const formatMoney = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
   const handleSliderChange = (value: number) => {
     setNumRiskyBets(value);
     setRiskyOutcomes([]);
@@ -69,7 +78,7 @@ export default function BettingStrategySimulator() {
         />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-6">
         {/* Risky Strategy */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -82,23 +91,22 @@ export default function BettingStrategySimulator() {
           </div>
           <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
             <div>
-              {numRiskyBets} bets × ${riskyBetSize} = $
-              {numRiskyBets * riskyBetSize} invested
+              {numRiskyBets} bets × {formatMoney(riskyBetSize)} = {formatMoney(numRiskyBets * riskyBetSize)} invested
             </div>
             <div>10% win rate, {riskyMultiplier}x payout</div>
             <div className="font-medium text-gray-700 dark:text-gray-300">
-              Expected: ${riskyExpectedValue.toFixed(0)} profit
+              Expected: {formatMoney(riskyExpectedValue)} profit
             </div>
           </div>
 
           {/* Visual grid of bets */}
-          <div className="flex flex-wrap gap-1.5 min-h-[120px] p-3 bg-gray-50 dark:bg-gray-900 rounded">
+          <div className="flex flex-wrap gap-1 sm:gap-1.5 min-h-[120px] p-2 sm:p-3 bg-gray-50 dark:bg-gray-900 rounded">
             {Array(numRiskyBets)
               .fill(0)
               .map((_, i) => (
                 <div
                   key={i}
-                  className={`w-8 h-8 rounded flex items-center justify-center text-xs font-bold ${
+                  className={`w-6 h-6 sm:w-8 sm:h-8 rounded flex items-center justify-center text-xs font-bold ${
                     riskyOutcomes[i] === undefined
                       ? "bg-gray-300 dark:bg-gray-700 text-gray-500"
                       : riskyOutcomes[i]
@@ -117,12 +125,12 @@ export default function BettingStrategySimulator() {
 
           <div className="h-[76px]">
             {riskyOutcomes.length > 0 && (
-              <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded">
-                <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {riskyWins} wins × ${riskyBetSize * riskyMultiplier}
+              <div className="p-2 sm:p-3 bg-purple-50 dark:bg-purple-950/30 rounded">
+                <div className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {riskyWins} wins × {formatMoney(riskyBetSize * riskyMultiplier)}
                 </div>
-                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                  {riskyPayout > 0 ? "+" : ""}${riskyPayout}
+                <div className="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">
+                  {riskyPayout > 0 ? "+" : ""}{formatMoney(Math.abs(riskyPayout))}
                 </div>
               </div>
             )}
@@ -141,23 +149,22 @@ export default function BettingStrategySimulator() {
           </div>
           <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
             <div>
-              {numSafeBets} bets × ${safeBetSize} = ${numSafeBets * safeBetSize}{" "}
-              invested
+              {numSafeBets} bets × {formatMoney(safeBetSize)} = {formatMoney(numSafeBets * safeBetSize)} invested
             </div>
             <div>70% win rate, {safeMultiplier}x payout</div>
             <div className="font-medium text-gray-700 dark:text-gray-300">
-              Expected: ${safeExpectedValue.toFixed(0)} profit
+              Expected: {formatMoney(safeExpectedValue)} profit
             </div>
           </div>
 
           {/* Visual grid of bets */}
-          <div className="flex flex-wrap gap-1.5 min-h-[120px] p-3 bg-gray-50 dark:bg-gray-900 rounded">
+          <div className="flex flex-wrap gap-1 sm:gap-1.5 min-h-[120px] p-2 sm:p-3 bg-gray-50 dark:bg-gray-900 rounded">
             {Array(numSafeBets)
               .fill(0)
               .map((_, i) => (
                 <div
                   key={i}
-                  className={`w-8 h-8 rounded flex items-center justify-center text-xs font-bold ${
+                  className={`w-6 h-6 sm:w-8 sm:h-8 rounded flex items-center justify-center text-xs font-bold ${
                     safeOutcomes[i] === undefined
                       ? "bg-gray-300 dark:bg-gray-700 text-gray-500"
                       : safeOutcomes[i]
@@ -176,12 +183,12 @@ export default function BettingStrategySimulator() {
 
           <div className="h-[76px]">
             {safeOutcomes.length > 0 && (
-              <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded">
-                <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {safeWins} wins × ${safeBetSize * safeMultiplier}
+              <div className="p-2 sm:p-3 bg-blue-50 dark:bg-blue-950/30 rounded">
+                <div className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {safeWins} wins × {formatMoney(safeBetSize * safeMultiplier)}
                 </div>
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                  {safePayout > 0 ? "+" : ""}${safePayout}
+                <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  {safePayout > 0 ? "+" : ""}{formatMoney(Math.abs(safePayout))}
                 </div>
               </div>
             )}
