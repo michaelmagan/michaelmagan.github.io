@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
-import { withContentlayer } from "next-contentlayer";
+import { withContentlayer } from "next-contentlayer2";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  turbopack: {},
   outputFileTracingRoot: path.join(__dirname),
   images: {
     formats: ["image/avif", "image/webp"],
@@ -19,7 +20,7 @@ const nextConfig: NextConfig = {
       ...config.resolve.alias,
       "contentlayer/generated": path.join(
         process.cwd(),
-        ".contentlayer/generated"
+        ".contentlayer/generated",
       ),
     } as typeof config.resolve.alias;
     return config;
