@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "contentlayer": "contentlayer2 build",
+    "prebuild": "npm run contentlayer",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "pretypecheck": "npm run contentlayer",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "clean": "rm -rf .next .contentlayer out",
     "prepare": "husky"
