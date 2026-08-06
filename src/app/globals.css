@@ -73,16 +73,6 @@ h6 {
     font-weight: 400;
 }
 
-/* Drop cap for first paragraph in post content only */
-.post-body > p:first-of-type::first-letter {
-    float: left;
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-    font-weight: 600;
-    font-size: 3.2em;
-    line-height: 0.85;
-    margin: 0.06em 0.18em 0 0;
-}
-
 /* Ensure blog post markdown headings are normal weight */
 .post-body h1,
 .post-body h2,
